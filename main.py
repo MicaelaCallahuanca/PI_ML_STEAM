@@ -1,21 +1,22 @@
 from fastapi import FastAPI
-from typing import List
-from dotenv import load_dotenv
 import os
 import csv
 
-load_dotenv()  # Cargar variables de entorno desde el archivo .env
+# Asigna directamente los valores de las variables de entorno
+db_host = os.environ.get("DB_HOST", "valor_por_defecto_host")
+db_port = os.environ.get("DB_PORT", "valor_por_defecto_puerto")
+db_user = os.environ.get("DB_USER", "valor_por_defecto_usuario")
+db_password = os.environ.get("DB_PASSWORD", "valor_por_defecto_contraseña")
+csv_file_path = os.environ.get("CSV_FILE_PATH", "valor_por_defecto_ruta_csv")
 
 app = FastAPI()
 
-# Obtener la ubicación del archivo CSV desde las variables de entorno
-nombre_archivo_csv = os.getenv("CSV_FILE_PATH")
+# Obtiene la ubicación del archivo CSV desde las variables de entorno
+nombre_archivo_csv = csv_file_path
 
-# Verificar si la variable de entorno está configurada
+# Verifica si la variable de entorno está configurada
 if not nombre_archivo_csv:
     raise Exception("La variable de entorno CSV_FILE_PATH no está configurada.")
-
-#datos = cargar_datos_desde_csv(nombre_archivo_csv)
 
 def cargar_datos_desde_csv(nombre_archivo):
     datos = []
@@ -27,7 +28,7 @@ def cargar_datos_desde_csv(nombre_archivo):
 
 @app.get("/")
 def index():
-    return {"detail": "Hello, FastApi!"}
+    return {"detail": "Hello, World!"}
 
 '''
 def obtener_nombres(datos):
