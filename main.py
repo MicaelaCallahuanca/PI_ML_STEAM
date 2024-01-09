@@ -76,6 +76,9 @@ def UserForGenre(genero: str) -> dict:
     
     # Calcula la suma del tiempo jugado por año para ese género
     df_tiempo_juego_anio = df_genero.groupby('year')['playtime_forever'].sum().reset_index()
+
+    # Renombra las columnas para que coincidan con lo esperado
+    df_tiempo_juego_anio = df_tiempo_juego_anio.rename(columns={'year': 'anio', 'playtime_forever': 'horas'})
     
     # Convierte el DataFrame a una lista de diccionarios con orientación 'records'
     lista_tiempo_juego = df_tiempo_juego_anio.to_dict(orient='records')
@@ -92,7 +95,7 @@ def UserForGenre(genero: str) -> dict:
 
 
 @app.get('/UsersRecommend/')
-def UsersRecommend(anio: int) -> dict:
+def UsersRecommend(anio: int):
     # Filtra el DataFrame para obtener juegos recomendados y comentarios positivos/neutrales para el año dado
     df_filtrado = df[(df['year'] == anio) & (df['recommend'] == True) & (df['review'].isin([1, 2]))]
 
@@ -118,7 +121,7 @@ def UsersRecommend(anio: int) -> dict:
 
 
 @app.get('/UsersWorstDeveloper/')
-def UsersWorstDeveloper(anio:int) -> dict:
+def UsersWorstDeveloper(anio:int):
     # Filtra el DataFrame 
     df_filtrado = df[(df['year'] == anio) & (df['recommend'] == False) & (df['review'] == 0)]
     
@@ -141,14 +144,15 @@ def UsersWorstDeveloper(anio:int) -> dict:
 
 
 @app.get('/sentiment_analysis/')
-def sentiment_analysis(empresa_desarrolladora:str) -> dict:
+def sentiment_analysis(empresa_desarrolladora:str):
     # Filtra el DataFrame por empresa desarrolladora
     df_empresa = df[df['developer'] == empresa_desarrolladora]
 
     # Cuenta la cantidad de reseñas por cada categoría de sentimiento
-    negativas = (df_empresa['review'] == 0).sum()
-    neutrales = (df_empresa['review'] == 1).sum()
-    positivas = (df_empresa['review'] == 2).sum()
+    counts = df_empresa['review'].value_counts()
+    negativas = counts.get(0, 0)
+    neutrales = counts.get(1, 0)
+    positivas = counts.get(2, 0)
 
     # Crea el diccionario de retorno con el nombre de la desarrolladora y los resultados del análisis de sentimiento
     resultado = {empresa_desarrolladora: [f"Negative = {negativas}", f"Neutral = {neutrales}", f"Positive = {positivas}"]}
