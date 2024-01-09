@@ -28,7 +28,7 @@ def cargar_datos_desde_csv(nombre_archivo):
 
 @app.get("/")
 def index():
-    return {"detail": "Hello, World!"}
+    return {"detail": "Hello, World!!"}
 
 '''
 def obtener_nombres(datos):
