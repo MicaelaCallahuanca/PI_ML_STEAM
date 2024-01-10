@@ -16,7 +16,7 @@ Pueden ver el paso a paso en el [proceso de ETL](https://github.com/MicaelaCalla
 Se creó la columna "Sentiment_analysis" aplicando análisis de sentimiento a las reseña de usuarios usando la librería textblob, dando como asignación: '0' si es una reseña negativa, '1' si es neutral y '2' si es positiva. La nueva columna reemplaza la columna review de user_reviews
 Pueden observar el paso a paso en el mismo notebook del [ETL](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/ETL.ipynb)
 
-3. **Funciones de consultas**
+3. **Funciones de consultas:**
 Se realizaron funciones en un archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py). Se creó una API, usando el módulo FastApi de python, para que pudieran ser consultadas:
 
 - def PlayTimeGenre( genero : str ): Debe devolver año con más horas jugadas para dicho género.
@@ -36,14 +36,14 @@ Ejemplo de retorno: [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
 - def sentiment_analysis( empresa desarrolladora : str ): Según la empresa desarrolladora, se devuelve un diccionario con el nombre de la desarrolladora como llave y una lista con la cantidad total de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento como valor.
 Ejemplo de retorno: {'Valve' : [Negativo = 182, Neutro = 120, Positivo = 278]}
 
-4. **API**
+1. **API:**
 Se usó una API, FastApi, para exponer las funciones de consultas (los endpoints). Luego se hizo el [deployement de la API en Render](https://pi-ml-steam-oc2n.onrender.com/docs). El código se encuentra en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
 
-5. **EDA**
+1. **EDA:**
 Se realizó un Análisis Explotorio de Datos (EDA) donde se exploró y examinó el conjunto de datos [EDA](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/EDA.ipynb)
 
-6. **Sistema de recomendación**
+1. **Sistema de recomendación:**
 Creé el sistema de recomendación item-item, éste se ubica en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
 
-7. **Video**
+1. **Video:**
 [Video explicativo del proyecto](), donde se detalla el uso de los endpoints desplegados en Render
