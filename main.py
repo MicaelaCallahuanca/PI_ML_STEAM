@@ -5,6 +5,11 @@ import csv
 from sklearn.neighbors import NearestNeighbors
 from fastapi import FastAPI, HTTPException, Query
 from typing import List
+from fastapi import FastAPI, Path
+import numpy as np
+from sklearn.metrics.pairwise        import cosine_similarity
+from sklearn.metrics.pairwise        import linear_kernel
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Asigna directamente los valores de las variables de entorno
 db_host = os.environ.get("DB_HOST", "valor_por_defecto_host")
@@ -148,8 +153,11 @@ def sentiment_analysis(empresa_desarrolladora:str):
 
 
 
+
+
+
 # Selecciona las columnas relevantes
-columns_to_use = ['user_id', 'item_id', 'review']
+columns_to_use = ['user_id', 'item_id', 'review', 'title']
 data = df[columns_to_use].fillna('')  # Llena valores NaN con cadenas vacías para evitar problemas con el modelo
 
 # verifica que la columna 'review' contenga números y no valores NaN
@@ -159,14 +167,14 @@ data['review'] = data['review'].fillna(1)  # Por ejemplo, llenar NaN con 1 para 
 model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=5)
 model.fit(data[['review']])  # Utiliza directamente la columna 'review' como características
 
-@app.get("/recommendations/", response_model=List[dict])
-async def get_recommendations(user_review:int):
+@app.get("/recomendacion_juego/", response_model=List[dict])
+async def get_recomendacion_juego(user_review:int):
     try:
         # Encuentra vecinos más cercanos basados en la columna 'review'
         _, indices = model.kneighbors([[user_review]])
 
         # Obtiene las recomendaciones
-        recommendations = data.loc[indices[0], ['item_id', 'review']]
+        recommendations = data.loc[indices[0], ['title', 'review']]
 
         return recommendations.to_dict(orient='records')
     except Exception as e:
