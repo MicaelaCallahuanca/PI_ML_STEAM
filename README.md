@@ -46,4 +46,4 @@ Se realizó un Análisis Explotorio de Datos (EDA) donde se exploró y examinó 
 Creé el sistema de recomendación item-item, éste se ubica en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
 
 7. **Video:**
-[Video explicativo del proyecto](), donde se detalla el uso de los endpoints desplegados en Render
+[Video explicativo del proyecto](https://www.youtube.com/watch?v=EywbSXHK2Kg), donde se detalla el uso de los endpoints desplegados en Render
