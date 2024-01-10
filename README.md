@@ -36,14 +36,14 @@ Ejemplo de retorno: [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
 - def sentiment_analysis( empresa desarrolladora : str ): Según la empresa desarrolladora, se devuelve un diccionario con el nombre de la desarrolladora como llave y una lista con la cantidad total de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento como valor.
 Ejemplo de retorno: {'Valve' : [Negativo = 182, Neutro = 120, Positivo = 278]}
 
-1. **API:**
+4. **API:**
 Se usó una API, FastApi, para exponer las funciones de consultas (los endpoints). Luego se hizo el [deployement de la API en Render](https://pi-ml-steam-oc2n.onrender.com/docs). El código se encuentra en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
 
-1. **EDA:**
+5. **EDA:**
 Se realizó un Análisis Explotorio de Datos (EDA) donde se exploró y examinó el conjunto de datos [EDA](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/EDA.ipynb)
 
-1. **Sistema de recomendación:**
+6. **Sistema de recomendación:**
 Creé el sistema de recomendación item-item, éste se ubica en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
 
-1. **Video:**
+7. **Video:**
 [Video explicativo del proyecto](), donde se detalla el uso de los endpoints desplegados en Render
