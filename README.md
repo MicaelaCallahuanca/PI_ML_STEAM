@@ -1,9 +1,12 @@
 # PI MLops
+
 ---
-## Introducción:
+
+## Introducción
+
 En este proyecto armé un sistema de recomendación de videojuegos para usuarios, para la plataforma multinacional de videojuegos Steam. Trabaje con tres archivos JSON anidados, donde se tiene que desanidar para poder leerlo correctamente y luego poder pasar al ETL(Extracción, Transformación, Carga) y EDA (Análisis Exploratorio de Datos). Dichos archivos los podes encontrar en la carpeta [dataset](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/tree/main/datasets) junto con un [diccionario de datos](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/datasets/Diccionario%20de%20Datos%20STEAM.xlsx)
 
-## Proceso:
+## Proceso
 
 1. **ETL  (Extracción, Transformación, Carga):**
 En esta etapa se extrae los archivos JSON y los convertimos en CSV. Se desanida las columnas y elimina las que no son requeridas para el sistema de recomendación y endopoints. También se tratan los nulos, duplicados y valores faltantes. Una vez realizado este proceso se obtiene tres CSV limpios, dichos archivos se mergean en uno llamado [dataframe_final.csv](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/dataframe_final.csv)
@@ -15,6 +18,7 @@ Pueden observar el paso a paso en el mismo notebook del [ETL](https://github.com
 
 3. **Funciones de consultas**
 Se realizaron funciones en un archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py). Se creó una API, usando el módulo FastApi de python, para que pudieran ser consultadas:
+
 - def PlayTimeGenre( genero : str ): Debe devolver año con más horas jugadas para dicho género.
 
 Ejemplo de retorno: {"Año de lanzamiento con más horas jugadas para Género X" : 2013}
@@ -27,7 +31,7 @@ Ejemplo de retorno: {"Usuario con más horas jugadas para Género X" : us213ndjs
 Ejemplo de retorno: [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
 
 - def UsersWorstDeveloper( año : int ): Devuelve el top 3 de desarrolladoras con juegos MENOS recomendados por usuarios para el año dado. (reviews.recommend = False y comentarios negativos)
--Ejemplo de retorno: [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
+Ejemplo de retorno: [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
 
 - def sentiment_analysis( empresa desarrolladora : str ): Según la empresa desarrolladora, se devuelve un diccionario con el nombre de la desarrolladora como llave y una lista con la cantidad total de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento como valor.
 Ejemplo de retorno: {'Valve' : [Negativo = 182, Neutro = 120, Positivo = 278]}
@@ -38,7 +42,8 @@ Se usó una API, FastApi, para exponer las funciones de consultas (los endpoints
 5. **EDA**
 Se realizó un Análisis Explotorio de Datos (EDA) donde se exploró y examinó el conjunto de datos [EDA](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/EDA.ipynb)
 
-6. **Video**
+6. **Sistema de recomendación**
+Creé el sistema de recomendación item-item, éste se ubica en el archivo [main.py](https://github.com/MicaelaCallahuanca/PI_ML_STEAM/blob/main/main.py)
+
+7. **Video**
 [Video explicativo del proyecto](), donde se detalla el uso de los endpoints desplegados en Render
-
-
