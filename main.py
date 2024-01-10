@@ -2,6 +2,9 @@ from fastapi import FastAPI
 import pandas as pd
 import os
 import csv
+from sklearn.neighbors import NearestNeighbors
+from fastapi import FastAPI, HTTPException, Query
+from typing import List
 
 # Asigna directamente los valores de las variables de entorno
 db_host = os.environ.get("DB_HOST", "valor_por_defecto_host")
@@ -14,22 +17,6 @@ app = FastAPI()
 
 df = pd.read_csv('dataframe_final.csv')
 
-'''
-# Obtiene la ubicación del archivo CSV desde las variables de entorno
-nombre_archivo_csv = csv_file_path
-
-# Verifica si la variable de entorno está configurada
-if not nombre_archivo_csv:
-    raise Exception("La variable de entorno CSV_FILE_PATH no está configurada.")
-
-def cargar_datos_desde_csv(nombre_archivo):
-    datos = []
-    with open(nombre_archivo, newline='') as archivo_csv:
-        lector_csv = csv.DictReader(archivo_csv)
-        for fila in lector_csv:
-            datos.append(fila)
-    return datos
-'''
 
 @app.get("/")
 def index():
@@ -159,3 +146,28 @@ def sentiment_analysis(empresa_desarrolladora:str):
 
     return resultado
 
+
+
+# Selecciona las columnas relevantes
+columns_to_use = ['user_id', 'item_id', 'review']
+data = df[columns_to_use].fillna('')  # Llena valores NaN con cadenas vacías para evitar problemas con el modelo
+
+# verifica que la columna 'review' contenga números y no valores NaN
+data['review'] = data['review'].fillna(1)  # Por ejemplo, llenar NaN con 1 para considerarlos neutrales
+
+# Crea y entrena el modelo Nearest Neighbors
+model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=5)
+model.fit(data[['review']])  # Utiliza directamente la columna 'review' como características
+
+@app.get("/recommendations/", response_model=List[dict])
+async def get_recommendations(user_review:int):
+    try:
+        # Encuentra vecinos más cercanos basados en la columna 'review'
+        _, indices = model.kneighbors([[user_review]])
+
+        # Obtiene las recomendaciones
+        recommendations = data.loc[indices[0], ['item_id', 'review']]
+
+        return recommendations.to_dict(orient='records')
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
